@@ -5,9 +5,9 @@ class OutputUi(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
-        ctk.CTkLabel(self, text="Output").pack(pady=5)
+        ctk.CTkLabel(self, text="Output", font=("Arial", 14, "bold")).pack(pady=5)
 
-        self.output = ctk.CTkTextbox(self, width=400, height=400)
+        self.output = ctk.CTkTextbox(self, width=450, height=450)
         self.output.pack(padx=10, pady=10)
 
 
@@ -17,5 +17,7 @@ class OutputUi(ctk.CTkFrame):
         self.output.delete("1.0", "end")
         self.output.insert("end", f"Result: {result}\n\n")
 
-        for stack, buffer in steps:
-            self.output.insert("end", f"Stack: {stack} | Input: {buffer}\n") 
+        for i, (stack, buffer) in enumerate(steps, start=1):
+            self.output.insert("end",f"step {i}:\n" 
+                               f"Stack: {stack}     " 
+                               f"Input: {buffer}\n") 

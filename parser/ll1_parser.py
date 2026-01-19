@@ -3,13 +3,18 @@ from parser.first_follow import compute_first, compute_follow
 from parser.parse_table import build_parse_table
 
 def run_ll1(grammar_text, input_string):
-    grammar, start_symbol = parse_grammar(grammar_text)
+
+    try:
+        grammar, start_symbol, _, _ = parse_grammar(grammar_text)
+    except ValueError as e:
+        return f"Grammar Error: {e}", []
+    
     first = compute_first(grammar)
     follow = compute_follow(grammar, first, start_symbol)
     parse_table = build_parse_table(grammar, first, follow)
 
     stack = ["$", start_symbol]
-    input_buffer = input_string.split() + ["$"]
+    input_buffer = input_string.strip().split() + ["$"]
 
     steps = []
 
@@ -35,7 +40,7 @@ def run_ll1(grammar_text, input_string):
                     for symbol in reversed(production):
                         stack.append(symbol)
             else:
-                return "REJECTED", steps
+                return f"REJECTED: no rules for ({stack_top}, {current_input})", steps
         else:
-            return "REJECTED", steps
+            return f"REJECTED: unexpected symbol '{current_input}' ", steps
 

@@ -3,33 +3,49 @@
 def compute_first(grammar):
     first = {nt: set() for nt in grammar}
 
-    def first_of(symbol):
-        if symbol not in grammar:
-            return {symbol}
-        return first[symbol]
-    
-    changed = True
+    def is_terminal(symbol):
+        return symbol not in grammar and symbol != "ε"
 
+    changed = True
     while changed:
         changed = False
+
         for nt in grammar:
             for production in grammar[nt]:
-                i = 0
-                while True:
+                add_epsilon = True
+
+                for symbol in production:
                     before = len(first[nt])
-                    f = first_of(production[i])
-                    first[nt].update(f - {"ε"})
 
-                    if "ε" not in f:
-                        break
+                    # Terminal
+                    if is_terminal(symbol):
+                        first[nt].add(symbol)
+                        add_epsilon = False
 
-                    i += 1
-                    if i == len(production):
+                    # Epsilon
+                    elif symbol == "ε":
+                        # epsilon production
                         first[nt].add("ε")
-                        break
+                        add_epsilon = False
+
+                    # Non-terminal
+                    else:
+                        first[nt].update(first[symbol] - {"ε"})
+                        if "ε" not in first[symbol]:
+                            add_epsilon = False
+
 
                     if len(first[nt]) > before:
                         changed = True
+
+                    if not add_epsilon:
+                        break
+
+                if add_epsilon:
+                    if "ε" not in first[nt]:
+                        first[nt].add("ε")
+                        changed = True
+
     return first
 
 
@@ -40,26 +56,39 @@ def compute_follow(grammar, first, start_symbol):
     changed = True
     while changed:
         changed = False
-        for nt in grammar:
-            for production in grammar[nt]:
-                for i, symbol in enumerate(production):
-                    if symbol in grammar:
-                        before = len(follow[symbol])
 
-                        if i + 1 < len(production):
-                            next_sym = production[i + 1]
-                            if next_sym in grammar:
-                                follow[symbol].update(first[next_sym] - {"ε"})
-                                if "ε" in first[next_sym]:
-                                    follow[symbol].update(follow[nt])
+        for A in grammar:
+            for production in grammar[A]:
+                for i, B in enumerate(production):
+                    if B not in grammar:
+                        continue
+
+                    before = len(follow[B])
+
+                    # β = production[i+1:]
+                    beta = production[i + 1:]
+
+                    if beta:
+                        add_follow_A = True
+
+                        for symbol in beta:
+                            if symbol in grammar:
+                                follow[B].update(first[symbol] - {"ε"})
+                                if "ε" in first[symbol]:
+                                    continue
+                                add_follow_A = False
+                                break
                             else:
-                                follow[symbol].add(next_sym)
-                        else:
-                            follow[symbol].update(follow[nt])
+                                follow[B].add(symbol)
+                                add_follow_A = False
+                                break
 
-                        if len(follow[symbol]) > before:
-                            changed = True
+                        if add_follow_A:
+                            follow[B].update(follow[A])
+                    else:
+                        follow[B].update(follow[A])
+
+                    if len(follow[B]) > before:
+                        changed = True
 
     return follow
-
-        
