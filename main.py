@@ -1,19 +1,12 @@
 import customtkinter as ctk
 from gui.app import LL1App
-##### tester on weather the customtkinter works
-# # ctk.set_appearance_mode("dark")
-# ctk.set_default_color_theme("green")
-
-# app = ctk.CTk()
-# app.geometry("400x400")
-
-# ctk.CTkLabel(app, text="Checking if this works?!").pack(pady=20)
-# app.mainloop()
 
 def main():
+    # Configure theme
     ctk.set_appearance_mode("dark")
-    ctk.set_default_color_theme("green")
+    ctk.set_default_color_theme("blue")
 
+    # Create and run app
     app = LL1App()
     app.mainloop()
 

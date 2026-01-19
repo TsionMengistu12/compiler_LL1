@@ -17,6 +17,14 @@ def compute_first(grammar):
                 for symbol in production:
                     before = len(first[nt])
 
+                    # Explicit epsilon production
+                    if symbol == "ε":
+                        first[nt].add("ε")
+                        if len(first[nt]) > before:
+                            changed = True
+                        add_epsilon = False
+                        break
+
                     # Terminal
                     if is_terminal(symbol):
                         first[nt].add(symbol)
