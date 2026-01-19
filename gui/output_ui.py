@@ -40,7 +40,7 @@ class OutputUi(ctk.CTkFrame):
                 ctk.CTkLabel(
                     self.steps_frame,
                     text=h,
-                    font=("Segoe UI", 11, "bold"),
+                    font=("Segoe UI", 14, "bold"),
                     text_color="#e0e7ff",
                     width=widths[c]
                 ).grid(row=0, column=c, padx=6, pady=8, sticky="w")
@@ -65,7 +65,7 @@ class OutputUi(ctk.CTkFrame):
                         self.steps_frame,
                         text=v,
                         width=widths[c],
-                        font=("Courier New", 10),
+                        font=("Courier New", 14),
                         text_color="#cbd5e1",
                         anchor="w"
                     ).grid(row=i, column=c, padx=6, pady=4, sticky="w")

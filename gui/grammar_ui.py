@@ -8,7 +8,7 @@ class GrammarUi(ctk.CTkFrame):
         instruction = ctk.CTkLabel(
             self,
             text="Enter grammar rules (one rule per line, e.g., E -> T E' | ε)",
-            font=("Segoe UI", 11),
+            font=("Segoe UI", 14),
             text_color="#a0aec0"
         )
         instruction.pack(pady=(0, 10), anchor="w")
@@ -18,7 +18,7 @@ class GrammarUi(ctk.CTkFrame):
             self,
             width=350,
             height=100,
-            font=("Courier New", 11),
+            font=("Courier New", 14),
             fg_color="#0f172a",
             text_color="#e0e7ff",
             border_color="#475569",
@@ -26,14 +26,14 @@ class GrammarUi(ctk.CTkFrame):
         )
         self.textbox.pack(fill="both", expand=True, pady=0)
 
-        # Placeholder example
-        self.textbox.insert("1.0",
-            "E -> T E'\n"
-            "E' -> + T E' | ε\n"
-            "T -> F T'\n"
-            "T' -> * F T' | ε\n"
-            "F -> ( E ) | id"
-        )
+        # # Placeholder example
+        # self.textbox.insert("1.0",
+        #     "E -> T E'\n"
+        #     "E' -> + T E' | ε\n"
+        #     "T -> F T'\n"
+        #     "T' -> * F T' | ε\n"
+        #     "F -> ( E ) | id"
+        # )
 
     def get_grammar(self):
         return self.textbox.get("1.0", "end").strip()

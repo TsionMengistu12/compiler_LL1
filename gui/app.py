@@ -24,10 +24,10 @@ class LL1App(ctk.CTk):
         header_label = ctk.CTkLabel(
             header_frame,
             text="LL(1) Parser Visualizer",
-            font=("Segoe UI", 24, "bold"),
+            font=("Segoe UI", 15, "bold"),
             text_color="white"
         )
-        header_label.pack(pady=16)
+        header_label.pack(pady=20)
 
         # Container frame for all content
         container = ctk.CTkFrame(self, fg_color="transparent")
@@ -40,10 +40,10 @@ class LL1App(ctk.CTk):
             font=("Segoe UI", 14, "bold"),
             text_color="#e0e7ff"
         )
-        grammar_label.pack(anchor="w", pady=(0, 8))
+        grammar_label.pack(anchor="w", pady=(0, 4))
 
         self.grammar_ui = GrammarUi(container)
-        self.grammar_ui.pack(fill="x", padx=0, pady=(0, 16))
+        self.grammar_ui.pack(fill="x", padx=0, pady=(0, 8))
 
         # Input and controls section
         controls_label = ctk.CTkLabel(
@@ -52,10 +52,10 @@ class LL1App(ctk.CTk):
             font=("Segoe UI", 14, "bold"),
             text_color="#e0e7ff"
         )
-        controls_label.pack(anchor="w", pady=(0, 8))
+        controls_label.pack(anchor="w", pady=(0, 4))
 
         self.input_ui = InputUi(container)
-        self.input_ui.pack(fill="x", padx=0, pady=(0, 16))
+        self.input_ui.pack(fill="x", padx=0, pady=(0, 8))
 
         # Main content section (2 columns)
         self.main_frame = ctk.CTkFrame(container, fg_color="transparent")

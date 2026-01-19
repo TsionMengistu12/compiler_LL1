@@ -15,29 +15,30 @@ class InputUi(ctk.CTkFrame):
         entry_label = ctk.CTkLabel(
             input_frame,
             text="Input String:",
-            font=("Segoe UI", 11),
+            font=("Segoe UI", 14),
             text_color="#cbd5e1"
         )
-        entry_label.pack(side="left", padx=(0, 12))
+        entry_label.pack(side="left", padx=(0, 10))
 
         self.entry = ctk.CTkEntry(
             input_frame,
             width=300,
-            font=("Courier New", 11),
+            height=36,
+            font=("Courier New", 14),
             fg_color="#0f172a",
             text_color="#e0e7ff",
             border_color="#475569",
             border_width=1,
             placeholder_text="Enter input string (e.g., (id+id)*id)"
         )
-        self.entry.pack(side="left", padx=(0, 12), fill="x", expand=True)
+        self.entry.pack(side="left", padx=(0, 10), fill="x", expand=True)
 
         # Parse button
         self.parse_btn = ctk.CTkButton(
             input_frame,
             text="Parse",
             command=self.parse,
-            font=("Segoe UI", 11, "bold"),
+            font=("Segoe UI", 13, "bold"),
             fg_color="#2563eb",
             hover_color="#1d4ed8",
             width=100,
@@ -50,9 +51,9 @@ class InputUi(ctk.CTkFrame):
             input_frame,
             text="Show Parse Table",
             command=self.show_table,
-            font=("Segoe UI", 11, "bold"),
-            fg_color="#7c3aed",
-            hover_color="#6d28d9",
+            font=("Segoe UI", 13, "bold"),
+            fg_color="#259ac2",
+            hover_color="#085774",
             width=130,
             height=36
         )

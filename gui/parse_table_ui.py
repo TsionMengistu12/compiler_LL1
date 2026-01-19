@@ -1,4 +1,3 @@
-# parse_table_ui.py
 import customtkinter as ctk
 
 
@@ -22,7 +21,7 @@ class ParseTableUi(ctk.CTkFrame):
             ctk.CTkLabel(
                 self.table_frame,
                 text="No parse table generated yet",
-                font=("Segoe UI", 11),
+                font=("Segoe UI", 14),
                 text_color="#64748b"
             ).pack(pady=20)
             return
@@ -36,9 +35,9 @@ class ParseTableUi(ctk.CTkFrame):
         ctk.CTkLabel(
             header_cell,
             text="NT \\ T",
-            font=("Segoe UI", 11, "bold"),
+            font=("Segoe UI", 14, "bold"),
             text_color="#e0e7ff"
-        ).pack(padx=6, pady=6)
+        ).pack(padx=10, pady=10)
 
         # Terminal headers
         for c, t in enumerate(terminals, start=1):
@@ -48,9 +47,9 @@ class ParseTableUi(ctk.CTkFrame):
             ctk.CTkLabel(
                 header_cell,
                 text=t,
-                font=("Segoe UI", 11, "bold"),
+                font=("Segoe UI", 14, "bold"),
                 text_color="#e0e7ff"
-            ).pack(padx=6, pady=6)
+            ).pack(padx=10, pady=10)
 
         # Table body
         for r, nt in enumerate(parse_table, start=1):
@@ -61,9 +60,9 @@ class ParseTableUi(ctk.CTkFrame):
             ctk.CTkLabel(
                 nt_cell,
                 text=nt,
-                font=("Segoe UI", 11, "bold"),
+                font=("Segoe UI", 14, "bold"),
                 text_color="#cbd5e1"
-            ).pack(padx=6, pady=6)
+            ).pack(padx=10, pady=10)
 
             # Production cells
             for c, t in enumerate(terminals, start=1):
@@ -80,6 +79,6 @@ class ParseTableUi(ctk.CTkFrame):
                     cell,
                     text=cell_text,
                     wraplength=130,
-                    font=("Courier New", 9),
+                    font=("Courier New", 14),
                     text_color=text_color
-                ).pack(padx=4, pady=4)
+                ).pack(padx=10, pady=10)
