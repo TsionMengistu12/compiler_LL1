@@ -11,7 +11,8 @@ class ParseTableUi(ctk.CTkFrame):
             label_text="",
             label_font=None
         )
-        self.table_frame.pack(fill="both", expand=True, padx=12, pady=12)
+        # A bit more padding makes the table feel less cramped.
+        self.table_frame.pack(fill="both", expand=True, padx=14, pady=14)
 
     def display(self, parse_table):
         for w in self.table_frame.winfo_children():
@@ -28,41 +29,47 @@ class ParseTableUi(ctk.CTkFrame):
 
         terminals = sorted({t for row in parse_table.values() for t in row})
 
+        # Make the grid responsive (so resizing the window feels good).
+        total_cols = len(terminals) + 1  # +1 for NT column
+        for c in range(total_cols):
+            self.table_frame.grid_columnconfigure(c, weight=1, minsize=120)
+        self.table_frame.grid_columnconfigure(0, weight=0, minsize=90)  # NT column
+
         # Header row - Non-Terminal column
         header_cell = ctk.CTkFrame(self.table_frame, fg_color="#1e293b", corner_radius=6)
-        header_cell.grid(row=0, column=0, padx=3, pady=3, sticky="nsew")
+        header_cell.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
 
         ctk.CTkLabel(
             header_cell,
             text="NT \\ T",
-            font=("Segoe UI", 14, "bold"),
+            font=("Segoe UI", 15, "bold"),
             text_color="#e0e7ff"
-        ).pack(padx=10, pady=10)
+        ).pack(padx=12, pady=12)
 
         # Terminal headers
         for c, t in enumerate(terminals, start=1):
             header_cell = ctk.CTkFrame(self.table_frame, fg_color="#1e293b", corner_radius=6)
-            header_cell.grid(row=0, column=c, padx=3, pady=3, sticky="nsew")
+            header_cell.grid(row=0, column=c, padx=4, pady=4, sticky="nsew")
 
             ctk.CTkLabel(
                 header_cell,
                 text=t,
-                font=("Segoe UI", 14, "bold"),
+                font=("Segoe UI", 15, "bold"),
                 text_color="#e0e7ff"
-            ).pack(padx=10, pady=10)
+            ).pack(padx=12, pady=12)
 
         # Table body
         for r, nt in enumerate(parse_table, start=1):
             # Non-terminal label
             nt_cell = ctk.CTkFrame(self.table_frame, fg_color="#1a1f2e", corner_radius=6)
-            nt_cell.grid(row=r, column=0, padx=3, pady=3, sticky="nsew")
+            nt_cell.grid(row=r, column=0, padx=4, pady=4, sticky="nsew")
 
             ctk.CTkLabel(
                 nt_cell,
                 text=nt,
-                font=("Segoe UI", 14, "bold"),
+                font=("Segoe UI", 15, "bold"),
                 text_color="#cbd5e1"
-            ).pack(padx=10, pady=10)
+            ).pack(padx=12, pady=12)
 
             # Production cells
             for c, t in enumerate(terminals, start=1):
@@ -73,12 +80,12 @@ class ParseTableUi(ctk.CTkFrame):
                 text_color = "#86efac" if prod else "#64748b"
 
                 cell = ctk.CTkFrame(self.table_frame, fg_color=bg_color, corner_radius=6)
-                cell.grid(row=r, column=c, padx=3, pady=3, sticky="nsew")
+                cell.grid(row=r, column=c, padx=4, pady=4, sticky="nsew")
 
                 ctk.CTkLabel(
                     cell,
                     text=cell_text,
-                    wraplength=130,
-                    font=("Courier New", 14),
+                    wraplength=180,
+                    font=("Courier New", 15),
                     text_color=text_color
-                ).pack(padx=10, pady=10)
+                ).pack(padx=12, pady=12)

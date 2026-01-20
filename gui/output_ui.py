@@ -20,12 +20,12 @@ class OutputUi(ctk.CTkFrame):
         self.result_label = ctk.CTkLabel(
             self,
             text="",
-            font=("Segoe UI", 12, "bold"),
+            font=("Segoe UI", 20, "bold"),
             text_color="#22c55e"
         )
         self.result_label.pack(pady=12)
 
-    def display_result(self, grammar_text, input_string):
+    def display_result(self, grammar_text, input_string, *, update_parse_table: bool = False):
         for w in self.steps_frame.winfo_children():
             w.destroy()
 
@@ -71,13 +71,17 @@ class OutputUi(ctk.CTkFrame):
                     ).grid(row=i, column=c, padx=6, pady=4, sticky="w")
 
             # Update result
-            color = "#22c55e" if result == "ACCEPTED" else "#ef4444"
-            status_text = f"✓ Result: {result}" if result == "ACCEPTED" else f"✗ Result: {result}"
-            self.result_label.configure(text=status_text, text_color=color)
+            accepted = (result == "ACCEPTED")
+            color = "#22c55e" if accepted else "#ef4444"
+            self.result_label.configure(text=result, text_color=color)
 
-            self.master.master.parse_table_ui.display(parse_table)
+            if update_parse_table:
+                # OutputUi is nested under: main_frame -> container -> LL1App (toplevel)
+                app = self.winfo_toplevel()
+                if hasattr(app, "parse_table_ui"):
+                    app.parse_table_ui.display(parse_table)
         except Exception as e:
-            self.result_label.configure(
-                text=f"Error: {str(e)}",
-                text_color="#ef4444"
-            )
+            # Don't render exception text inside the UI (keeps the screen clean).
+            # Still print for debugging.
+            print(f"[OutputUi] display_result error: {e}")
+            self.result_label.configure(text="")

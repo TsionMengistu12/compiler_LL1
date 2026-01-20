@@ -60,7 +60,9 @@ class LL1App(ctk.CTk):
         # Main content section (2 columns)
         self.main_frame = ctk.CTkFrame(container, fg_color="transparent")
         self.main_frame.pack(fill="both", expand=True)
-        self.main_frame.grid_columnconfigure((0, 1), weight=1)
+        # Give the parse table a bit more room than the parsing steps panel.
+        self.main_frame.grid_columnconfigure(0, weight=3, minsize=520)
+        self.main_frame.grid_columnconfigure(1, weight=4, minsize=620)
 
         # Output section label
         output_label = ctk.CTkLabel(

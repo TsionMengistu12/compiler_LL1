@@ -63,7 +63,8 @@ class InputUi(ctk.CTkFrame):
         grammar = self.master.master.grammar_ui.get_grammar()
         input_string = self.entry.get()
 
-        self.master.master.output_ui.display_result(grammar, input_string)
+        # Parse button should only show parsing steps/result (not the parse table)
+        self.master.master.output_ui.display_result(grammar, input_string, update_parse_table=False)
 
     def show_table(self):
         grammar = self.master.master.grammar_ui.get_grammar()

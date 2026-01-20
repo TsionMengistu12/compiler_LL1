@@ -23,7 +23,6 @@ def run_ll1(grammar_text, input_string):
         current_input = input_buffer[0]
         action = ""
 
-        steps.append((stack.copy(), input_buffer.copy(), action))
 
         if stack_top == current_input == "$":
             steps.append((stack.copy(), input_buffer.copy(), "ACCEPT"))
@@ -51,4 +50,6 @@ def run_ll1(grammar_text, input_string):
             action = f"Error: unexpected {current_input}"
             steps.append((stack.copy(), input_buffer.copy(), action))
             return f"REJECTED: unexpected symbol '{current_input}' ", steps, parse_table
+        
+        steps.append((stack.copy(), input_buffer.copy(), action))
 
